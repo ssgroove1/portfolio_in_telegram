@@ -1,2 +1,2 @@
-TG_BOT_TOKEN = "TOKEN"
+TG_BOT_TOKEN = "token"
 DATABASE = "portfolio.db"
