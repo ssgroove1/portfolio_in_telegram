@@ -11,7 +11,7 @@ class DB_Manager:
     def create_tables(self):
         conn = sqlite3.connect(self.database)
         with conn:
-            conn.execute('''CREATE TABLE projects (
+            conn.execute('''CREATE TABLE IF NOT EXISTS projects (
                             project_id INTEGER PRIMARY KEY,
                             user_id INTEGER,
                             project_name TEXT NOT NULL,
@@ -64,6 +64,14 @@ class DB_Manager:
 (user_id, project_name, url, status_id) 
 values(?, ?, ?, ?)"""
         self.__executemany(sql, data)
+    
+
+    def insert_column(self):
+        conn = sqlite3.connect(self.database)
+        with conn:
+            conn.execute("ALTER TABLE projects ADD COLUMN photo NULL")
+
+    
 
     def insert_skill(self, user_id, project_name, skill):
         sql = 'SELECT project_id FROM projects WHERE project_name = ? AND user_id = ?'
@@ -73,6 +81,17 @@ values(?, ?, ?, ?)"""
         data = [(project_id, skill_id)]
         sql = 'INSERT OR IGNORE INTO project_skills VALUES(?, ?)'
         self.__executemany(sql, data)
+
+
+    def add_skill(self, skill_name):
+        sql = "INSERT INTO skills (skill_name) values(?)"
+        self.__executemany(sql, [skill_name])
+
+
+    def add_status(self, status_name):
+        sql = "INSERT INTO status (status_name) values(?)"
+        self.__executemany(sql, [status_name])
+
 
     def get_statuses(self):
         sql="SELECT status_name from status"
@@ -126,6 +145,11 @@ WHERE project_name = ? AND user_id = ?"""
 WHERE user_id = ? AND project_id = ? """
         self.__executemany(sql, [(user_id, project_id)])
     
+    def delete_status(self, status_name):
+        sql = """DELETE FROM status
+WHERE status_name = ? """
+        self.__executemany(sql, [status_name])
+
     def delete_skill(self, project_id, skill_id):
         sql = """DELETE FROM skills 
 WHERE skill_id = ? AND project_id = ? """
@@ -146,6 +170,11 @@ if __name__ == '__main__':
     print('')
     print(manager.get_project_skills("TranslateBot"))
 
+
+    #manager.add_skill(["HTML"])
+    #manager.add_status(["Тестируется"])
+
+    #manager.delete_status(["Тестируется"])
 
     #manager.insert_project([(1000, "prggs", "tsgagsg", 1002),])
     #manager.update_projects("url", ("gsgggsgsg", "prggs", 1000))
