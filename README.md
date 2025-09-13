@@ -5,3 +5,7 @@
 - В будущем бот будет обновляться.
 
 ## Снизу предоставлены некоторые скрины проекта:
+<img width="1045" height="1010" alt="image" src="https://github.com/user-attachments/assets/c7eaf578-e332-4788-8795-f5f07cf87695" />
+---------------------------Бот портфолио---------------------------
+<img width="1015" height="1005" alt="image" src="https://github.com/user-attachments/assets/ce832668-5657-4ba7-bfd7-87ed913f2a3d" />
+
